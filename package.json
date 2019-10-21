@@ -1,0 +1,30 @@
+{
+  "name": "books",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -b tests/",
+    "start": "node . | bunyan",
+    "init-db": "DATABASE_URL=$(node ./tools/get-database-url.js) db-migrate up",
+    "init-data": "node ./tools/mysql-create-records.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.10.0",
+    "koa-bunyan-logger": "^2.1.0",
+    "koa-joi-router": "^6.0.0",
+    "lru-cache": "^5.1.1",
+    "mysql2": "^1.7.0",
+    "pg": "^7.12.1"
+  },
+  "devDependencies": {
+    "db-migrate": "^0.11.6",
+    "db-migrate-mysql": "^1.1.10",
+    "eslint": "^6.5.1",
+    "mocha": "^6.2.2",
+    "supertest": "^4.0.2"
+  }
+}

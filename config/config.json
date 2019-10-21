@@ -1,0 +1,20 @@
+{
+  "server": {
+    "address": "127.0.0.1",
+    "port": 8008,
+    "apiPath": "/api"
+  },
+  "database": {
+    "driver": "mysql",
+    "mysql": {
+      "host": "localhost",
+      "port": 3306,
+      "user": "books",
+      "password": "books",
+      "database": "books"
+    },
+    "postgresql": {},
+    "sqlite": {},
+    "memory": {}
+  }
+}
