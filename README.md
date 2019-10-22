@@ -6,4 +6,5 @@ $ npm install
 $ npm run init-db
 $ npm run init-data
 $ npm test
+$ npm start
 ```

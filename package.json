@@ -15,6 +15,7 @@
   "dependencies": {
     "koa": "^2.10.0",
     "koa-bunyan-logger": "^2.1.0",
+    "koa-docs": "^2.1.0",
     "koa-joi-router": "^6.0.0",
     "lru-cache": "^5.1.1",
     "mysql2": "^1.7.0",

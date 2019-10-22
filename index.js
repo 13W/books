@@ -2,13 +2,20 @@ const config = require('./config/config');
 
 const Koa = require('koa');
 const logger = require('koa-bunyan-logger');
+const koaDocs = require('koa-docs');
 const Database = require('./libs/db');
 const routes = require('./libs/routes');
 
 const app = new Koa();
 const publicApiRouter = require('koa-joi-router')();
 
-const server = app.listen(config.server.port, config.server.address);
+const serverAddress = config.server.address || '127.0.0.1';
+const serverPort = config.server.port || 8008;
+const serverApiPath = config.server.apiPath || '/api';
+const serverDocsPath = `${serverApiPath}/docs`;
+
+const server = app.listen(serverPort, serverAddress);
+console.log(`The server is running at http://${serverAddress}:${serverPort}${serverApiPath}`);
 
 app.use(logger());
 app.use(logger.requestIdContext());
@@ -22,11 +29,25 @@ app.use(async (ctx, next) => {
   return await next();
 });
 
-for (const route of routes) {
-  publicApiRouter.use(route);
+for (const router of Object.values(routes)) {
+  publicApiRouter.use(router.middleware());
 }
 
-publicApiRouter.prefix(config.server.apiPath);
+app.use(koaDocs.get(serverDocsPath, {
+  title: 'Books API',
+  version: '1.0.0',
+
+  theme: 'darkly',
+  routeHandlers: 'disabled',  // Hide the route implementation code from docs
+  groups: [
+    { groupName: 'Authors', routes: routes.authors.routes },
+    { groupName: 'Books', routes: routes.books.routes }
+  ]
+}));
+
+publicApiRouter.prefix(serverApiPath);
+publicApiRouter.get('/', async (ctx) => ctx.redirect(serverDocsPath));
+
 app.use(publicApiRouter.middleware());
 app.on('error', (error) => {
   console.error(error);

@@ -17,8 +17,8 @@ let author = null;
 
 before(function (done) {
 
-  for (const route of routes) {
-    publicApiRouter.use(route);
+  for (const router of Object.values(routes)) {
+    publicApiRouter.use(router.middleware());
   }
 
   publicApiRouter.prefix(config.server.apiPath);

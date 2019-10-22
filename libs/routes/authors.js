@@ -1,3 +1,4 @@
+/* eslint-disable require-atomic-updates */
 const joiRouter = require('koa-joi-router');
 const {Joi} = joiRouter;
 const router = joiRouter();
@@ -85,4 +86,4 @@ router.route({
   }
 });
 
-module.exports = router.middleware();
+module.exports = router;

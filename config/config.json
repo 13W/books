@@ -12,9 +12,6 @@
       "user": "books",
       "password": "books",
       "database": "books"
-    },
-    "postgresql": {},
-    "sqlite": {},
-    "memory": {}
+    }
   }
 }

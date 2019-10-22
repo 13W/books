@@ -1,4 +1,2 @@
-module.exports = [
-  require('./authors'),
-  require('./books')
-].filter(Boolean);
+exports.authors = require('./authors');
+exports.books = require('./books');
