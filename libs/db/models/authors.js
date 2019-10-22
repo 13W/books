@@ -8,7 +8,14 @@ class Authors extends Database {
       ${where}
     `;
 
-    return await this.db.query(query, props);
+    const [result] = await this.db.query(query, props);
+    return result;
+  }
+
+  async get(id) {
+    const query = 'SELECT id, name FROM authors WHERE id = :id';
+    const [[result]] = await this.db.query(query, {id});
+    return result;
   }
 
   async insert(object) {
@@ -20,7 +27,8 @@ class Authors extends Database {
     }
 
     const query = `INSERT INTO authors (${fields.join(', ')}) VALUES (${values.join(', ')})`;
-    return await this.db.query(query, object);
+    const [result] = await this.db.query(query, object);
+    return result;
   }
 
   async update(object = null) {
@@ -34,12 +42,14 @@ class Authors extends Database {
     }
 
     const query = `UPDATE authors SET ${sets.join(', ')} WHERE id = :id`;
-    return await this.db.query(query, object);
+    const [result] = await this.db.query(query, object);
+    return result;
   }
 
   async delete(id) {
     const query = 'DELETE FROM authors WHERE id = :id';
-    return await this.db.query(query, {id});
+    const [result] = await this.db.query(query, {id});
+    return result;
   }
 }
 

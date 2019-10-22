@@ -28,6 +28,9 @@ for (const route of routes) {
 
 publicApiRouter.prefix(config.server.apiPath);
 app.use(publicApiRouter.middleware());
+app.on('error', (error) => {
+  console.error(error);
+});
 
 (async () => {
   console.log('initializing database...');

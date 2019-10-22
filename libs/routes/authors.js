@@ -19,7 +19,7 @@ router.route({
   async handler(ctx) {
     const {db, query} = ctx;
 
-    [ctx.body] = await db.authors.list(query);
+    ctx.body = await db.authors.list(query);
   }
 });
 
@@ -35,7 +35,7 @@ router.route({
   },
   async handler(ctx) {
     const {db, params: {id}} = ctx;
-    [[ctx.body]] = await db.authors.list({id}, {limit: 1});
+    ctx.body = await db.authors.get(id);
   }
 });
 
@@ -51,8 +51,8 @@ router.route({
   async handler(ctx) {
     const {db, request: {body}} = ctx;
 
-    const [result] = await db.authors.insert(body);
-    [[ctx.body]] = await db.authors.list({id: result.insertId}, {limit: 1});
+    const result = await db.authors.insert(body);
+    ctx.body = await db.authors.get(result.insertId);
   }
 });
 
@@ -69,7 +69,7 @@ router.route({
     const {db, request: {body}} = ctx;
 
     await db.authors.update(body);
-    [[ctx.body]] = await db.authors.list({id: body.id}, {limit: 1});
+    ctx.body = await db.authors.get(body.id);
   }
 });
 
@@ -81,7 +81,7 @@ router.route({
   },
   async handler(ctx) {
     const {db, params: {id}} = ctx;
-    [ctx.body] = await db.authors.delete(id);
+    ctx.body = await db.authors.delete(id);
   }
 });
 

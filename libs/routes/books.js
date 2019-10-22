@@ -28,7 +28,7 @@ router.route({
   async handler(ctx) {
     const {db, query} = ctx;
 
-    [ctx.body] = await db.books.list(query);
+    ctx.body = await db.books.list(query);
   }
 });
 
@@ -38,13 +38,13 @@ router.route({
   validate: {
     params: requestGetByIdParams,
     output: {
-      200: {body: schemaBook}
+      200: {body: schemaBook.keys({author: Joi.string()})}
     },
     failure: 400
   },
   async handler(ctx) {
     const {db, params: {id}} = ctx;
-    [[ctx.body]] = await db.books.list({id}, {limit: 1});
+    ctx.body = await db.books.get(id);
   }
 });
 
@@ -60,8 +60,8 @@ router.route({
   async handler(ctx) {
     const {db, request: {body}} = ctx;
 
-    const out = await db.books.insert(body);
-    [ctx.body] = out;
+    const result = await db.books.insert(body);
+    ctx.body = await db.books.get(result.insertId);
   }
 });
 
@@ -78,7 +78,8 @@ router.route({
   async handler(ctx) {
     const {db, request: {body}} = ctx;
 
-    [ctx.body] = await db.books.update(body);
+    await db.books.update(body);
+    ctx.body = await db.books.get(body.id);
   }
 });
 
@@ -90,7 +91,7 @@ router.route({
   },
   async handler(ctx) {
     const {db, params: {id}} = ctx;
-    [ctx.body] = await db.books.delete(id);
+    ctx.body = await db.books.delete(id);
   }
 });
 

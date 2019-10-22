@@ -1,11 +1,6 @@
 let driver = null;
 
 class Database {
-  constructor() {
-    this.index = 1;
-    this.tableName = this.constructor.name.toLowerCase();
-  }
-
   get db() {
     return driver;
   }

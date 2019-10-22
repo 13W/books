@@ -19,11 +19,9 @@ class MysqlDriver extends SQLDriver {
 
   async query(sql, params) {
     const conn = await this.getConnection();
-    return await conn.query(sql, params);
-  }
-
-  async update(sql, params) {
-    return await this.query(sql, params);
+    const result = await conn.query(sql, params);
+    await conn.release();
+    return result;
   }
 }
 
