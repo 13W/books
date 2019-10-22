@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha -b tests/",
     "start": "node . | bunyan",
-    "init-db": "DATABASE_URL=$(node ./tools/get-database-url.js) db-migrate up",
+    "init-db": "DATABASE_URL=$(node ./tools/get-database-url.js) db-migrate --migrations-dir=./migrations/mysql up",
+    "init-db-pg": "DATABASE_URL=$(node ./tools/get-database-url.js) db-migrate --migrations-dir=./migrations/pg up",
+    "init-db-sqlite": "DATABASE_URL=$(node ./tools/get-database-url.js) db-migrate --migrations-dir=./migrations/sqlite up",
     "init-data": "node ./tools/mysql-create-records.js"
   },
   "keywords": [],
@@ -17,9 +19,11 @@
     "koa-bunyan-logger": "^2.1.0",
     "koa-docs": "^2.1.0",
     "koa-joi-router": "^6.0.0",
-    "lru-cache": "^5.1.1",
-    "mysql2": "^1.7.0",
-    "pg": "^7.12.1"
+    "mysql2": "^1.7.0"
+  },
+  "optionalDependencies": {
+    "pg": "^7.12.1",
+    "sqlite3": "^4.1.0"
   },
   "devDependencies": {
     "db-migrate": "^0.11.6",
